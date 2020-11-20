@@ -1,0 +1,3 @@
+* StupmWM.d
+
+A repository to build [[https://github.com/stumpwm][StumpWM]], fetch contrib and custom modules and link the config.
