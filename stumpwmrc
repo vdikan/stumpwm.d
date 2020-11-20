@@ -211,9 +211,15 @@
 
 ;; CPU
 (load-module "cpu")
+(setf cpu::*cpu-modeline-fmt* "%c%t")
 
 ;; Mem
 (load-module "mem")
+(setf mem::*mem-modeline-fmt* "MEM:%p")
+
+;; Notifications
+(load-module "notifications")
+(define-key *root-map* (kbd "N") 'notifications:*notifications-map*)
 
 ;; Tray
 (load-module "stumptray")
@@ -227,12 +233,14 @@
 ;;
 ;; (toggle-mode-line (current-screen) (current-head))
 (setf stumpwm:*screen-mode-line-format*
-      (list ;"%w || "
-       "%d || "
-       "%I || "
-       "BATT: " '(:eval (run-shell-command "upower -i $(upower -e | grep \'BAT\') | grep percentage | awk \'\{printf $(NF)\}\'" t)) " || "
-       "%M|| "
-       "%C"))
+      (list "%d ^4||^n "
+            "%I ^4||^n "
+            "BATT: " '(:eval (run-shell-command "upower -i $(upower -e | grep \'BAT\') | grep percentage | awk \'\{printf $(NF)\}\'" t))
+            " ^4|^n "
+            "%M^4|^n "
+            "%C ^4||^n "
+            "^B^6%N^n"))
+
 (setf *mode-line-position* :bottom)
 ;;
 (defcommand show-tray () ()

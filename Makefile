@@ -17,6 +17,7 @@ contrib:
 links:
 	ln -s $(REPO_DIR)/stumpwmrc ~/.stumpwmrc
 	ln -s $(REPO_DIR) ~/.stumpwm.d
+	ln -s $(CONTRIB_DIR)/util/stumpish/stumpish ~/bin/stumpish
 
 all:	stump contrib links
 
@@ -25,3 +26,4 @@ clean:
 	rm -rf $(CONTRIB_DIR)
 	rm ~/.stumpwmrc
 	rm ~/.stumpwm.d
+	rm ~/bin/stumpish
