@@ -206,6 +206,13 @@
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "amixer-Master-1+")
 (define-key *top-map* (kbd "XF86AudioMute") "amixer-Master-toggle pulse")
 
+;; Alert-Me-At utility command
+(load-module "alert-me")
+
+;;
+;; Modeline & Tray
+;;
+
 ;; WiFi
 (load-module "wifi")
 
@@ -224,9 +231,6 @@
 ;; Tray
 (load-module "stumptray")
 
-;;
-;; Modeline
-;;
 (setf *mode-line-foreground-color* "#f0f0f0")
 (setf *mode-line-background-color* "#20204d")
 (setf *mode-line-border-color* "#6f9fff")
@@ -246,11 +250,6 @@
 (defcommand show-tray () ()
             "Shortcut for modeline and stumptray."
             (run-commands "mode-line" "stumptray"))
-;; Removed the tray toggle of tray.
-;; Let it be on all the time; toggling a widow to-from
-;; full-screen mode is more handy.
-;; (define-key *root-map* (kbd "y") "show-tray")
-
 ;;
 ;; My custom modules playground
 ;;
