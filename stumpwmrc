@@ -311,7 +311,7 @@
   (if *stumpwm-first-load*
       (progn
         (setf *stumpwm-first-load* nil)
-        (slynk:create-server :port 4096) ; <- Launch Slynk server
+        (slynk:create-server :port 4096 :dont-close t) ; <- Launch Slynk server
         (run-commands "mode-line" "stumptray")
         (run-commands "exec setxkbmap -option ctrl:swapcaps")
         (run-commands "exec emacs --daemon")
