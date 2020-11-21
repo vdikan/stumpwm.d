@@ -1,6 +1,8 @@
 REPO_DIR := $(realpath ./)
 STUMP_DIR := $(REPO_DIR)/stumpwm
 CONTRIB_DIR := $(REPO_DIR)/modules
+CONTRIB_REPO := https://github.com/vdikan/stumpwm-contrib
+CONTRIB_BRANCH := my-master
 
 .PHONY: stump contrib links all clean
 
@@ -12,7 +14,7 @@ stump:
 	cd $(STUMP_DIR) && sudo make install
 
 contrib:
-	git clone https://github.com/stumpwm/stumpwm-contrib $(CONTRIB_DIR)
+	git clone -b $(CONTRIB_BRANCH) $(CONTRIB_REPO) $(CONTRIB_DIR)
 
 links:
 	ln -s $(REPO_DIR)/stumpwmrc ~/.stumpwmrc
