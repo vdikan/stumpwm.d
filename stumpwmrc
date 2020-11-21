@@ -83,14 +83,20 @@
 ;; Exec shortcut
 (define-key *root-map* (kbd "c")   "exec")
 (define-key *root-map* (kbd "C-c") "exec")
+
+;; My custom UI utils module
+(load-module "ui-extras")
+
+(defcommand exec-with-pager (&optional (initial "")) (:rest)
+  "Run shell command and output result as text through the Pager UI."
+  (let ((cmd (read-one-line (current-screen) "[ Pager ]<-: " :initial-input initial)))
+    (when cmd
+      (ui-extras:display-pager-text
+       (uiop:run-program cmd :output '(:string :split t))))))
+(define-key *root-map* (kbd "C") "exec-with-pager")
+
 ;; Banish mouse cursor
 (define-key *root-map* (kbd "C-v") "banish")
-;; Launch separate xterm terminal - old way
-;; (defcommand invoke-terminal () ()
-;;   "Run or raise xterm as omnipotent terminal emulator."
-;;   (run-or-raise "xterm" '(:title "xterm")))
-;; (define-key *root-map* (kbd "t") "invoke-terminal")
-;; (define-key *root-map* (kbd "C-t") "invoke-terminal")
 
 ;; emacs client mode
 (defcommand invoke-emacsclient () ()
