@@ -92,7 +92,7 @@
   (let ((cmd (read-one-line (current-screen) "[ Pager ]<-: " :initial-input initial)))
     (when cmd
       (ui-extras:display-pager-text
-       (uiop:run-program cmd :output '(:string :split t))))))
+       (uiop:run-program cmd :output '(:string :stripped t))))))
 (define-key *root-map* (kbd "C") "exec-with-pager")
 
 ;; Banish mouse cursor
