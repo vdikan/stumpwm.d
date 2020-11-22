@@ -260,6 +260,14 @@
 ;; My custom modules playground
 ;;
 
+;; Interface for SiegeTower: my ColeslaW blog instance
+;;
+(load-module "coleslaw-ui")
+
+(setf coleslaw-ui:*blog-dir* #p"~/siegetower/")
+
+(define-key *root-map* (kbd "s") 'coleslaw-ui:*coleslaw-ui-map*)
+
 ;; Common commands and menu shortcuts
 ;;
 ;; Weather reports with wttr.in and curl

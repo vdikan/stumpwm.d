@@ -1,7 +1,7 @@
 REPO_DIR := $(realpath ./)
 STUMP_DIR := $(REPO_DIR)/stumpwm
 CONTRIB_DIR := $(REPO_DIR)/modules
-CONTRIB_REPO := https://github.com/vdikan/stumpwm-contrib
+CONTRIB_REPO := git@github.com:vdikan/stumpwm-contrib.git
 CONTRIB_BRANCH := my-master
 
 .PHONY: stump contrib links all clean
