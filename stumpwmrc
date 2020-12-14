@@ -117,6 +117,11 @@
 (define-key *root-map* (kbd "t") "invoke-emacs-shell")
 (define-key *root-map* (kbd "C-t") "invoke-emacs-shell")
 
+;; Shortcut for mate (gnome) terminal
+(defcommand invoke-term-command () ()
+            (run-or-raise "exec mate-terminal" '(:title "Terminal")))
+(define-key *root-map* (kbd "F12") "invoke-term-command")
+
 ;; emacs capture - funny idea from setup with spacemacs
 ;; (defcommand emacs-capture (template-key)
 ;;   ((:key "Enter template key: "))
