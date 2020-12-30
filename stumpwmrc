@@ -33,10 +33,10 @@
 
 (my-stump-set-color screen-fg-color "#00cdff")
 (my-stump-set-color screen-bg-color "#000019")
-(my-stump-set-color screen-focus-color  "#6f9fff")
+(my-stump-set-color screen-focus-color  "#60204d")
 (my-stump-set-color screen-unfocus-color  "#000019")
-(my-stump-set-color screen-border-color "#6f9fff")
-(my-stump-set-color screen-float-focus-color "#6f9fff")
+(my-stump-set-color screen-border-color "#00cdff")
+(my-stump-set-color screen-float-focus-color "#60204d")
 (my-stump-set-color screen-float-unfocus-color "#000019")
 (update-colors-all-screens)
 ;;
@@ -93,7 +93,7 @@
     (when cmd
       (ui-extras:display-pager-text
        (uiop:run-program cmd :output '(:string :stripped t))))))
-(define-key *root-map* (kbd "C") "exec-with-pager")
+(define-key *root-map* (kbd "C") "eeec-with-pager")
 
 ;; Banish mouse cursor
 (define-key *root-map* (kbd "C-v") "banish")
@@ -242,9 +242,9 @@
 ;; Tray
 (load-module "stumptray")
 
-(setf *mode-line-foreground-color* "#f0f0f0")
+(setf *mode-line-foreground-color* "#f0f0ff")
 (setf *mode-line-background-color* "#000019")
-(setf *mode-line-border-color* "#6f9fff")
+(setf *mode-line-border-color* "#00cdff")
 ;;
 ;; (toggle-mode-line (current-screen) (current-head))
 (setf stumpwm:*screen-mode-line-format*
