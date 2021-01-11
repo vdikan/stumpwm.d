@@ -84,17 +84,6 @@
 (define-key *root-map* (kbd "c")   "exec")
 (define-key *root-map* (kbd "C-c") "exec")
 
-;; My custom UI utils module
-(load-module "ui-extras")
-
-(defcommand exec-with-pager (&optional (initial "")) (:rest)
-  "Run shell command and output result as text through the Pager UI."
-  (let ((cmd (read-one-line (current-screen) "[ Pager ]<-: " :initial-input initial)))
-    (when cmd
-      (ui-extras:display-pager-text
-       (uiop:run-program cmd :output '(:string :stripped t))))))
-(define-key *root-map* (kbd "C") "eeec-with-pager")
-
 ;; Banish mouse cursor
 (define-key *root-map* (kbd "C-v") "banish")
 
@@ -121,24 +110,6 @@
 (defcommand invoke-term-command () ()
             (run-or-raise "exec mate-terminal" '(:title "Terminal")))
 (define-key *root-map* (kbd "F12") "invoke-term-command")
-
-;; emacs capture - funny idea from setup with spacemacs
-;; (defcommand emacs-capture (template-key)
-;;   ((:key "Enter template key: "))
-;;   "Capture X-selection with emacs acccording to chosen template."
-;;   (send-meta-key (current-screen) (kbd "C-c"))
-;;   (invoke-emacsclient)
-;;   (send-meta-key (current-screen) (kbd "SPC"))
-;;   (send-meta-key (current-screen) (kbd "c"))
-;;   (send-meta-key (current-screen) (kbd "c"))
-;;   (send-meta-key (current-screen) template-key)
-;;   (send-meta-key (current-screen) (kbd "p"))
-;;   ;; (send-meta-key (current-screen) (kbd "i"))
-;;   ;; (window-send-string (get-x-selection))
-;;   (send-meta-key (current-screen) (kbd "ESC")))
-
-;; (define-key *root-map* (kbd "C-M-q") "emacs-capture q")
-;; (define-key *root-map* (kbd "C-M-t") "emacs-capture t")
 
 ;; browser
 (defprogram-shortcut invoke-browser :command "sensible-browser"
@@ -219,6 +190,7 @@
 (define-key *top-map* (kbd "XF86AudioMute") "amixer-Master-toggle pulse")
 
 ;; Alert-Me-At utility command
+;;TODO: fix aler time validation
 (load-module "alert-me")
 
 ;;
@@ -262,20 +234,14 @@
 (defcommand show-tray () ()
             "Shortcut for modeline and stumptray."
             (run-commands "mode-line" "stumptray"))
+
 ;;
-;; My custom modules playground
-;;
-
-;; Interface for SiegeTower: my ColeslaW blog instance
-;;
-(load-module "coleslaw-ui")
-
-(setf coleslaw-ui:*blog-dir* #p"~/siegetower/")
-
-(define-key *root-map* (kbd "s") 'coleslaw-ui:*coleslaw-ui-map*)
-
 ;; Common commands and menu shortcuts
+;; Now with App-Menu from Contrib
 ;;
+
+(load-module "app-menu")
+
 ;; Weather reports with wttr.in and curl
 (defvar wttr-extra-options "ATFm")
 
@@ -294,13 +260,62 @@
               place days wttr-extra-options)
       :output :string))))
 
+(defcommand wttr-in-sabadell () () (wttr-in "Sabadell" 1))
+(defcommand wttr-in-moscow () () (wttr-in "Moscow" 1))
+(defcommand wttr-in-saarbrucken () () (wttr-in "Saarbrucken" 1))
 
-(setf *common-commands-bindings*
-      (let ((m (make-sparse-keymap)))
-        (define-key m (kbd "w") "wttr-in Sabadell 1")
-        m))
+;; Utils shortcuts definitions
 
-(define-key *root-map* (kbd ",") '*common-commands-bindings*)
+(defcommand openfortigui () ()
+  (run-or-raise "openfortigui" '(:class "OpenFortiGUI")))
+
+(defcommand bluetooth () ()
+  (run-or-raise "blueman-manager" '(:class "Bluetooth Devices")))
+
+(defcommand ebook-reader () ()
+  (run-or-raise "evince" '(:class "Evince")))
+
+;; App-Menu Setup
+
+(setf app-menu:*app-menu*
+      `(("Weather →"
+         ("Quick"      wttr-in)
+         ("@ Home"     wttr-in-sabadell)
+         ("@ Moscow"   wttr-in-moscow)
+         ("@ Saarland" wttr-in-saarbrucken))
+        ("Connections →"
+         ("Bluetooth" bluetooth)
+         ("OpenFortiGUI" openfortigui))
+        ("Apps →"
+         ("EReader" ebook-reader)
+         ("TeleCon →"
+          ("Zoom"  "zoom")
+          ("Skype" "skypeforlinux")))))
+
+(define-key *root-map* (kbd ",") "show-menu")
+
+;;
+;; My custom modules playground
+;;
+;; Experimental: my custom UI utils
+;;
+(load-module "ui-extras")
+
+(defcommand exec-with-pager (&optional (initial "")) (:rest)
+  "Run shell command and output result as text through the Pager UI."
+  (let ((cmd (read-one-line (current-screen) "[ Pager ]<-: " :initial-input initial)))
+    (when cmd
+      (ui-extras:display-pager-text
+       (uiop:run-program cmd :output '(:string :stripped t))))))
+(define-key *root-map* (kbd "C") "exec-with-pager")
+
+;; Interface for SiegeTower: my ColeslaW blog instance
+;;
+(load-module "coleslaw-ui")
+
+(setf coleslaw-ui:*blog-dir* #p"~/siegetower/")
+
+(define-key *root-map* (kbd "s") 'coleslaw-ui:*coleslaw-ui-map*)
 
 ;; My Pomodoro tracker in Stump
 (add-to-load-path "~/.quicklisp/local-projects/stump-pomodoro")
