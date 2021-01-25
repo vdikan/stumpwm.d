@@ -33,10 +33,10 @@
 
 (my-stump-set-color screen-fg-color "#00cdff")
 (my-stump-set-color screen-bg-color "#000019")
-(my-stump-set-color screen-focus-color  "#60204d")
+(my-stump-set-color screen-focus-color  "#940093")
 (my-stump-set-color screen-unfocus-color  "#000019")
 (my-stump-set-color screen-border-color "#00cdff")
-(my-stump-set-color screen-float-focus-color "#60204d")
+(my-stump-set-color screen-float-focus-color "#940093")
 (my-stump-set-color screen-float-unfocus-color "#000019")
 (update-colors-all-screens)
 ;;
@@ -290,6 +290,7 @@
          ("EReader" ebook-reader)
          ("TeleCon →"
           ("Zoom"  "zoom")
+          ("Teams" "teams")
           ("Skype" "skypeforlinux")))))
 
 (define-key *root-map* (kbd ",") "show-menu")
