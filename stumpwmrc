@@ -23,7 +23,7 @@
       ;; '("black" "red" "green" "magenta" "blue" "yellow" "cyan" "white"))
       ;; '("#000019" "red" "#6f9fff" "magenta" "blue" "#f0f0f0" "lightskyblue" "cyan"))
       ;; Looks like non-VGA-16 codes do not appear in modules
-      '("#000019" "#ff88b4" "#90ee90" "#ff83fa" "#00cdff" "#fffab4" "#00ffff" "#f0f0f0"))
+      '("#000019" "#ff5555" "#90ee90" "#ffff44" "#00cdff" "#ffb0ff" "#00ffff" "#f0f0f0"))
 (update-color-map (current-screen))     ; which other color maps to upgrade?
 
 (defmacro my-stump-set-color (val color)
@@ -264,6 +264,31 @@
 (defcommand wttr-in-moscow () () (wttr-in "Moscow" 1))
 (defcommand wttr-in-saarbrucken () () (wttr-in "Saarbrucken" 1))
 
+;; 2-Display controls
+(defvar output-main "eDP-1"
+  "The main output name of the device")
+
+(defvar output-ext "HDMI-1"
+  "The external output name of the device")
+
+(defcommand set-output-main-display () ()
+  (run-commands
+   (format nil "exec xrandr --output ~a --auto --output ~a --off"
+           output-main output-ext))
+  (refresh-heads))
+
+(defcommand set-output-ext-display () ()
+  (run-commands
+   (format nil "exec xrandr --output ~a --off --output ~a --auto"
+           output-main output-ext))
+  (refresh-heads))
+
+(defcommand set-output-two-displays () ()
+  (run-commands
+   (format nil "exec xrandr --output ~a --auto --output ~a --auto --right-of eDP-1"
+           output-main output-ext))
+  (refresh-heads))
+
 ;; Utils shortcuts definitions
 
 (defcommand openfortigui () ()
@@ -283,15 +308,19 @@
          ("@ Home"     wttr-in-sabadell)
          ("@ Moscow"   wttr-in-moscow)
          ("@ Saarland" wttr-in-saarbrucken))
-        ("Connections →"
-         ("Bluetooth" bluetooth)
-         ("OpenFortiGUI" openfortigui))
         ("Apps →"
          ("EReader" ebook-reader)
          ("TeleCon →"
           ("Zoom"  "zoom")
           ("Teams" "teams")
-          ("Skype" "skypeforlinux")))))
+          ("Skype" "skypeforlinux")))
+        ("Connections →"
+         ("Bluetooth" bluetooth)
+         ("OpenFortiGUI" openfortigui))
+        ("Displays →"
+         ("Solo Main" set-output-main-display)
+         ("2 Displays" set-output-two-displays)
+         ("Solo External" set-output-ext-display))))
 
 (define-key *root-map* (kbd ",") "show-menu")
 
