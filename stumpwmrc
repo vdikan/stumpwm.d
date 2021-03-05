@@ -264,6 +264,9 @@
 (defcommand wttr-in-moscow () () (wttr-in "Moscow" 1))
 (defcommand wttr-in-saarbrucken () () (wttr-in "Saarbrucken" 1))
 
+;; Golden raftio
+(load-module "swm-golden-ratio")
+
 ;; 2-Display controls
 (defvar output-main "eDP-1"
   "The main output name of the device")
@@ -318,6 +321,7 @@
          ("Bluetooth" bluetooth)
          ("OpenFortiGUI" openfortigui))
         ("Displays →"
+         ("Golden Ratio" swm-golden-ratio:toggle-golden-ratio)
          ("Solo Main" set-output-main-display)
          ("2 Displays" set-output-two-displays)
          ("Solo External" set-output-ext-display))))
