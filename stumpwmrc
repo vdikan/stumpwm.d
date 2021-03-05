@@ -352,19 +352,17 @@
 (define-key *root-map* (kbd "s") 'coleslaw-ui:*coleslaw-ui-map*)
 
 ;; My Pomodoro tracker in Stump
-(add-to-load-path "~/.quicklisp/local-projects/stump-pomodoro")
-(load-module "stump-pomodoro")
+(load-module "swm-pomodoro")
 
-(defvar *stump-pomodoro-bindings*
+(defvar *swm-pomodoro-bindings*
   (let ((m (make-sparse-keymap)))
-    (define-key m (kbd "]") "pomodoro-dash")
-    (define-key m (kbd "[") "pomodoro-status")
+    (define-key m (kbd "d") "pomodoro-status")
     (define-key m (kbd "s") "pomodoro-start-timer")
     (define-key m (kbd "c") "pomodoro-cancel-timer")
-    (define-key m (kbd "r") "pomodoro-reset-series")
+    (define-key m (kbd "r") "pomodoro-reset")
     m))
 
-(define-key *root-map* (kbd "]") '*stump-pomodoro-bindings*)
+(define-key *root-map* (kbd ".") '*swm-pomodoro-bindings*)
 
 ;; Kbmap trigger
 (define-key *root-map* (kbd "C-`") "exec setxkbmap -option ctrl:swapcaps")
