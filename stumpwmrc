@@ -145,7 +145,7 @@
 (make-web-jump "google-search"    "https://www.google.ru/search?q=")
 (make-web-jump "academia-search"  "https://www.google.ru/scholar?q=")
 (make-web-jump "goodreads-search" "https://www.goodreads.com/search?q=")
-(make-web-jump "libgen-search"    "https://libgen.is/search?q=")
+(make-web-jump "libgen-search"    "https://libgen.is/search.php?req=")
 (make-web-jump "yandex-search"    "https://yandex.ru/search/?text=")
 (make-web-jump "video-search"     "https://www.youtube.com/results?search_query=")
 (make-web-jump "imdb-search"      "https://www.imdb.com/find?q=")
@@ -179,6 +179,11 @@
 ;; Installed in the ~/.stumpwm.d/modules/ as written in:
 ;; https://github.com/stumpwm/stumpwm/wiki/Modules
 ;;
+
+;; Notifications - first contrib module to load
+(load-module "notifications")
+(define-key *root-map* (kbd "N") 'notifications:*notifications-map*)
+
 ;; Keyboard layouts
 (load-module "kbd-layouts")
 (kbd-layouts::keyboard-layout-list "us" "ru")
@@ -190,7 +195,6 @@
 (define-key *top-map* (kbd "XF86AudioMute") "amixer-Master-toggle pulse")
 
 ;; Alert-Me-At utility command
-;;TODO: fix aler time validation
 (load-module "alert-me")
 
 ;;
@@ -207,10 +211,6 @@
 ;; Mem
 (load-module "mem")
 (setf mem::*mem-modeline-fmt* "MEM:%p")
-
-;; Notifications
-(load-module "notifications")
-(define-key *root-map* (kbd "N") 'notifications:*notifications-map*)
 
 ;; Tray
 (load-module "stumptray")
