@@ -108,7 +108,8 @@
 
 ;; Shortcut for mate (gnome) terminal
 (defcommand invoke-term-command () ()
-            (run-or-raise "exec mate-terminal" '(:title "Terminal")))
+  ;; (run-or-raise "exec mate-terminal" '(:title "Terminal"))
+  (run-or-raise "exec xterm" '(:title "xterm")))
 (define-key *root-map* (kbd "F12") "invoke-term-command")
 
 ;; browser
@@ -305,7 +306,7 @@
 
 ;; Stock price query interface
 ;;
-(load-module "stocks-api")
+;; (load-module "stocks-api")
 
 ;; App-Menu Setup
 
@@ -315,7 +316,7 @@
          ("@ Home"     wttr-in-sabadell)
          ("@ Moscow"   wttr-in-moscow)
          ("@ Saarland" wttr-in-saarbrucken))
-        ("Stocks →" stocks-api:display-stocks-menu)
+        ;; ("Stocks →" stocks-api:display-stocks-menu)
         ("Apps →"
          ("EReader" ebook-reader)
          ("TeleCon →"
