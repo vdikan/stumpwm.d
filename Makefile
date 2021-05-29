@@ -6,6 +6,8 @@ CONTRIB_BRANCH := my-master
 
 .PHONY: stump contrib links all clean
 
+all:	stump contrib links
+
 stump:
 	git clone https://github.com/stumpwm/stumpwm.git $(STUMP_DIR)
 	cd $(STUMP_DIR) && ./autogen.sh
@@ -20,8 +22,6 @@ links:
 	ln -s $(REPO_DIR)/stumpwmrc ~/.stumpwmrc
 	ln -s $(REPO_DIR) ~/.stumpwm.d
 	ln -s $(CONTRIB_DIR)/util/stumpish/stumpish ~/bin/stumpish
-
-all:	stump contrib links
 
 clean:
 	rm -rf $(STUMP_DIR)
