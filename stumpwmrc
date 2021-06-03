@@ -181,6 +181,10 @@
 ;; https://github.com/stumpwm/stumpwm/wiki/Modules
 ;;
 
+;; GnuPass interface. Needs full path stored in $PASSWORD_STORE_DIR
+(load-module "pass")
+(define-key *root-map* (kbd "Z") "pass-copy-menu")
+
 ;; Notifications - first contrib module to load
 (load-module "notifications")
 (define-key *root-map* (kbd "N") 'notifications:*notifications-map*)
