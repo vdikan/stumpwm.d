@@ -355,11 +355,11 @@
 
 ;; Interface for SiegeTower: my ColeslaW blog instance
 ;;
-;; (load-module "coleslaw-ui")
+(load-module "coleslaw-ui")
 
-;; (setf coleslaw-ui:*blog-dir* #p"~/siegetower/")
+(setf coleslaw-ui:*blog-dir* #p"~/siegetower/")
 
-;; (define-key *root-map* (kbd "s") 'coleslaw-ui:*coleslaw-ui-map*)
+(define-key *root-map* (kbd "s") 'coleslaw-ui:*coleslaw-ui-map*)
 
 ;; My Pomodoro tracker in Stump
 (load-module "swm-pomodoro")
