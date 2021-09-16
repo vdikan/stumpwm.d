@@ -108,9 +108,11 @@
 
 ;; Shortcut for mate (gnome) terminal
 (defcommand invoke-term-command () ()
-  ;; (run-or-raise "exec mate-terminal" '(:title "Terminal"))
   (run-or-raise "exec xterm" '(:title "xterm")))
+(defcommand invoke-term-24bit-command () ()
+  (run-or-raise "exec mate-terminal" '(:title "24b-term")))
 (define-key *root-map* (kbd "F12") "invoke-term-command")
+(define-key *root-map* (kbd "S-F12") "invoke-term-24bit-command")
 
 ;; browser
 (defprogram-shortcut invoke-browser :command "sensible-browser"
