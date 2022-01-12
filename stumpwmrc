@@ -1,7 +1,11 @@
 ;; This is a -*- lisp -*- file.
 (in-package :stumpwm)
 
+;; Help here:
+;; https://wiki.archlinux.org/title/stumpwm
+
 (ql:quickload :slynk)                   ; Later the slynk-server will be injected
+(ql:quickload "clx-truetype")           ; For TTF-font support
 
 ;; Set ctrl-space as prefix sequence
 (set-prefix-key (kbd "C-SPC"))
@@ -11,10 +15,15 @@
 ;; ideas from https://github.com/alezost/stumpwm-config/blob/master/visual.lisp
 ;;
 ;; Message window font
+;;NOTE: ttf font config moved to *first-load* section
 ;; (set-font "-xos4-terminus-medium-r-normal--20-140-72-72-c-80-iso8859-15")
 ;; (set-font "-*-terminus-bold-r-*-*-22-*-*-*-*-*-iso8859-*")
 ;; (set-font "10x20-cyrillic")
-(set-font "-*-terminus-medium-r-*-*-22-*-*-*-*-*-iso10646-1")
+;;(set-font "-*-terminus-medium-r-*-*-22-*-*-*-*-*-iso10646-1")
+;; (set-font "Iosevka Term:size=16")
+;; (load-module "ttf-fonts")
+;; (xft:cache-fonts)
+;; (set-font (make-instance 'xft:font :family "Iosevka Term" :subfamily "Regular" :size 14))
 ;;
 ;; Colorscheme experiments:
 ;; https://stumpwm.github.io/git/stumpwm-git_13.html#Colors
@@ -23,7 +32,7 @@
       ;; '("black" "red" "green" "magenta" "blue" "yellow" "cyan" "white"))
       ;; '("#000019" "red" "#6f9fff" "magenta" "blue" "#f0f0f0" "lightskyblue" "cyan"))
       ;; Looks like non-VGA-16 codes do not appear in modules
-      '("#000019" "#ff5555" "#90ee90" "#ffff44" "#00cdff" "#ffb0ff" "#00ffff" "#f0f0f0"))
+      '("#000019" "#ff5555" "#90ee90" "#8d74d4" "#00cdff" "#ffb0ff" "#00ffff" "#f0f0f0"))
 (update-color-map (current-screen))     ; which other color maps to upgrade?
 
 (defmacro my-stump-set-color (val color)
@@ -33,10 +42,10 @@
 
 (my-stump-set-color screen-fg-color "#00cdff")
 (my-stump-set-color screen-bg-color "#000019")
-(my-stump-set-color screen-focus-color  "#940093")
+(my-stump-set-color screen-focus-color  "#8d74d4")
 (my-stump-set-color screen-unfocus-color  "#000019")
-(my-stump-set-color screen-border-color "#00cdff")
-(my-stump-set-color screen-float-focus-color "#940093")
+(my-stump-set-color screen-border-color "#8d74d4")
+(my-stump-set-color screen-float-focus-color "#8d74d4")
 (my-stump-set-color screen-float-unfocus-color "#000019")
 (update-colors-all-screens)
 ;;
@@ -224,16 +233,16 @@
 
 (setf *mode-line-foreground-color* "#f0f0ff")
 (setf *mode-line-background-color* "#000019")
-(setf *mode-line-border-color* "#00cdff")
+(setf *mode-line-border-color* "#8d74d4")
 ;;
 ;; (toggle-mode-line (current-screen) (current-head))
 (setf stumpwm:*screen-mode-line-format*
-      (list "%d ^4||^n "
-            "%I ^4||^n "
+      (list "%d ^[^B^3|^] "
+            "%I ^[^B^3|^] "
             "BATT: " '(:eval (run-shell-command "upower -i $(upower -e | grep \'BAT\') | grep percentage | awk \'\{printf $(NF)\}\'" t))
-            " ^4|^n "
-            "%M^4|^n "
-            "%C ^4||^n "
+            " ^[^B^3|^] "
+            "%M^[^B^3|^] "
+            "%C ^[^B^3|^] "
             "^B^6%N^n"))
 
 (setf *mode-line-position* :bottom)
@@ -308,7 +317,7 @@
   (run-or-raise "blueman-manager" '(:class "Bluetooth Devices")))
 
 (defcommand ebook-reader () ()
-  (run-or-raise "evince" '(:class "Evince")))
+  (run-or-raise "atril" '(:class "Atril")))
 
 ;; Stock price query interface
 ;;
@@ -391,6 +400,11 @@
       (progn
         (setf *stumpwm-first-load* nil)
         (slynk:create-server :port 4096 :dont-close t) ; <- Launch Slynk server
+
+        (load-module "ttf-fonts") ; <- set TTF-font
+        (xft:cache-fonts)
+        (set-font (make-instance 'xft:font :family "Iosevka Term" :subfamily "Regular" :size 14))
+
         (run-commands "mode-line" "stumptray")
         (run-commands "exec setxkbmap -option ctrl:swapcaps")
         (run-commands "exec emacs --daemon")
