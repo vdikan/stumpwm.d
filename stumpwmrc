@@ -403,7 +403,7 @@
 
         (load-module "ttf-fonts") ; <- set TTF-font
         (xft:cache-fonts)
-        (set-font (make-instance 'xft:font :family "Iosevka Term" :subfamily "Regular" :size 14))
+        (set-font (make-instance 'xft:font :family "Iosevka Term Light" :subfamily "Regular" :size 14))
 
         (run-commands "mode-line" "stumptray")
         (run-commands "exec setxkbmap -option ctrl:swapcaps")
